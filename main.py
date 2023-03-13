@@ -2,7 +2,6 @@ from flask import Flask, render_template
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from datetime import datetime, timedelta
-import json
 
 app = Flask(__name__)
 
@@ -29,8 +28,7 @@ def read_sheet(sheet_name: str, range: str):
     result = sheet.values().get(spreadsheetId=SPREADSHEET_ID,
                                 range=f'{sheet_name}!{range}').execute()
     values = result.get('values', [])
-    json_values = json.dumps(values, ensure_ascii=False)
-    return json_values
+    return values
 
 def get_last_sunday():
     today = datetime.today()
